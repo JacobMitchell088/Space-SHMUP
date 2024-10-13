@@ -14,6 +14,8 @@ public class PowerUp : MonoBehaviour
     public Vector2 driftMinMax = new Vector2(.25f, 2);
     public float lifeTime = 10;
     public float fadeTime = 4;
+    public AudioSource audioSource;
+    public AudioClip pickUpSFX;
 
     [Header("Dynamic")]
     public eWeaponType _type;
@@ -87,6 +89,23 @@ public class PowerUp : MonoBehaviour
     }
 
     public void AbsorbedBy(GameObject target) {
+        PlayPickUPSFX();
         Destroy(this.gameObject);
+    }
+
+    protected void PlayPickUPSFX() {
+        if (pickUpSFX != null) {
+            GameObject deathSFXObj = new GameObject("PickUpSFX");
+            AudioSource tempAudioSource = deathSFXObj.AddComponent<AudioSource>();
+
+            tempAudioSource.clip = pickUpSFX;
+            tempAudioSource.volume = 1.5f;
+            tempAudioSource.time = 0.1f; // start the audio inward slightly
+
+            tempAudioSource.Play();
+
+
+            Destroy(deathSFXObj, pickUpSFX.length);
+        }
     }
 }
