@@ -9,9 +9,13 @@ public class ProjectileHero : MonoBehaviour
     private BoundsCheck bndCheck;
     private Renderer rend;
     
+    
 
     [Header("Dynamic")]
     public Rigidbody rigid;
+    public AudioSource audioSource;
+    public AudioClip shotSFX;
+
     [SerializeField]
     private eWeaponType _type;
 
@@ -24,6 +28,7 @@ public class ProjectileHero : MonoBehaviour
         bndCheck = GetComponent<BoundsCheck>();
         rend = GetComponent<Renderer>();
         rigid = GetComponent<Rigidbody>();
+        PlayShotSFX();
     }
 
 
@@ -46,5 +51,11 @@ public Vector3 vel {
     get {return rigid.velocity; }
     set { rigid.velocity = value; }
 }
+
+void PlayShotSFX() {
+        if (shotSFX != null) {
+            audioSource.PlayOneShot(shotSFX, 0.02f);
+        }
+    }
 
 }

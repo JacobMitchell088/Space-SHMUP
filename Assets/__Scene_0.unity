@@ -399,6 +399,7 @@ MonoBehaviour:
   - {fileID: 893293265}
   audioSource: {fileID: 582429594}
   gotHitSFX: {fileID: 8300000, guid: e0a82ad6d8ade0342a94be65f3308371, type: 3}
+  deathSFX: {fileID: 8300000, guid: b47be851abc8d4f4daa812f446e182e0, type: 3}
   _shieldLevel: 1
 --- !u!4 &582429592
 Transform:
@@ -1053,7 +1054,7 @@ MonoBehaviour:
   - {fileID: 9185519998980853174, guid: 486b535a9aae8446f9346d286631b31d, type: 3}
   enemySpawnPerSecond: 0.5
   enemyInsetDefault: 1.5
-  gameRestartDelay: 2
+  gameRestartDelay: 4
   prefabPowerUp: {fileID: 7690825346275091591, guid: 483f8cda3b43bac46b4c815d41eac0c8, type: 3}
   weaponDefinitions:
   - type: 1

@@ -15,6 +15,7 @@ public class Hero : MonoBehaviour
     public Weapon[] weapons;
     public AudioSource audioSource;
     public AudioClip gotHitSFX;
+    public AudioClip deathSFX;
 
     [Header("Dynamic")] [Range(0, 4)] [SerializeField]
     private  float _shieldLevel = 1;
@@ -119,6 +120,7 @@ public class Hero : MonoBehaviour
             _shieldLevel = Mathf.Min(value, 4);
             // If the shield is going to be set to less than zero
             if (value < 0) {
+                PlayHeroDeathSFX();
                 Destroy(this.gameObject); // destroy hero
                 Main.HERO_DIED();
             }
@@ -145,6 +147,23 @@ public class Hero : MonoBehaviour
         if (gotHitSFX != null) {
             audioSource.PlayOneShot(gotHitSFX, 0.9f);
         }
-        Debug.LogWarning("tried to play got hit sfx");
+    }
+
+
+    void PlayHeroDeathSFX() {
+        if (deathSFX != null) {
+            GameObject deathSFXObj = new GameObject("DeathSFX");
+            AudioSource tempAudioSource = deathSFXObj.AddComponent<AudioSource>();
+
+            tempAudioSource.clip = deathSFX;
+            tempAudioSource.volume = 0.4f;
+            tempAudioSource.time = 0.1f; // start the audio inward slightly
+
+
+            tempAudioSource.Play();
+
+
+            Destroy(deathSFXObj, deathSFX.length);
+        }
     }
 }

@@ -80,7 +80,7 @@ public class Enemy : MonoBehaviour
 
     protected void PlayHitSFX() {
         if (hitSound != null) {
-            audioSource.PlayOneShot(hitSound, 0.10f);
+            audioSource.PlayOneShot(hitSound, 0.5f);
         }
     }
     
