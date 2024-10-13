@@ -79,6 +79,7 @@ public class Enemy_4 : Enemy
                 }
 
                 float dmg = Main.GET_WEAPON_DEFINITION(p.type).damageOnHit;
+                PlayHitSFX();
 
 
                 bool shieldFound = false;

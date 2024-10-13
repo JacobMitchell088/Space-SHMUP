@@ -13,6 +13,8 @@ public class Hero : MonoBehaviour
     public GameObject projectilePrefab;
     public float projectileSpeed = 40;
     public Weapon[] weapons;
+    public AudioSource audioSource;
+    public AudioClip gotHitSFX;
 
     [Header("Dynamic")] [Range(0, 4)] [SerializeField]
     private  float _shieldLevel = 1;
@@ -24,6 +26,13 @@ public class Hero : MonoBehaviour
 
     public event WeaponFireDelegate fireEvent;
 
+
+    void Start() {
+        if (audioSource == null) {
+            audioSource = GetComponent<AudioSource>();
+        }
+    }
+    
     void Awake() {
         if (S == null) {
             S = this;
@@ -69,6 +78,7 @@ public class Hero : MonoBehaviour
         PowerUp pUp = go.GetComponent<PowerUp>();
         if (enemy != null) {
             shieldLevel--;
+            PlayGotHitSFX();
             Destroy(go);
         }
         else if(pUp != null) {
@@ -129,5 +139,12 @@ public class Hero : MonoBehaviour
         foreach (Weapon w in weapons) {
             w.SetType(eWeaponType.none);
         }
+    }
+
+    void PlayGotHitSFX() {
+        if (gotHitSFX != null) {
+            audioSource.PlayOneShot(gotHitSFX, 0.9f);
+        }
+        Debug.LogWarning("tried to play got hit sfx");
     }
 }

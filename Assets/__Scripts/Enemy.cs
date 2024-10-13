@@ -11,6 +11,9 @@ public class Enemy : MonoBehaviour
     public float health = 10;
     public int score = 100;
     public float powerUpDropChance = 1f;
+    public AudioSource audioSource;
+    public AudioClip hitSound;
+    public AudioClip deathSFX;
 
     protected bool calledShipDestroyed = false;
 
@@ -18,6 +21,12 @@ public class Enemy : MonoBehaviour
 
     void Awake() {
         bndCheck = GetComponent<BoundsCheck>();
+    }
+
+    void Start() {
+        if (audioSource == null) {
+            audioSource = GetComponent<AudioSource>();
+        }
     }
 
     public Vector3 pos {
@@ -52,11 +61,13 @@ public class Enemy : MonoBehaviour
         if (p != null) {
             if (bndCheck.isOnScreen) {
                 health -= Main.GET_WEAPON_DEFINITION(p.type).damageOnHit;
+                PlayHitSFX();
                 if (health <= 0) {
                     if (!calledShipDestroyed) {
                         calledShipDestroyed = true;
                         Main.SHIP_DESTROYED(this);
                     }
+                    PlayDeathSFX();
                     Destroy(this.gameObject);
                 }
             }
@@ -65,5 +76,31 @@ public class Enemy : MonoBehaviour
         else {
             print ("Enemy hit by non projectile hero: " + otherGO.name);
         }
+    }
+
+    protected void PlayHitSFX() {
+        if (hitSound != null) {
+            audioSource.PlayOneShot(hitSound, 0.10f);
+        }
+    }
+    
+    protected void PlayDeathSFX() {
+        if (deathSFX != null) {
+            GameObject deathSFXObj = new GameObject("DeathSFX");
+            AudioSource tempAudioSource = deathSFXObj.AddComponent<AudioSource>();
+
+            tempAudioSource.clip = deathSFX;
+            tempAudioSource.volume = 0.75f;
+            tempAudioSource.time = 0.1f; // start the audio inward slightly
+
+            tempAudioSource.Play();
+
+
+            Destroy(deathSFXObj, deathSFX.length);
+        }
+    }
+
+    protected void HandleDeath() { // Made to ensure we can play death VFXs / Audio before deleting this actor
+    
     }
 }
