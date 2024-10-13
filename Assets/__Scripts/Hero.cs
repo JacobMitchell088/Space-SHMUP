@@ -65,6 +65,7 @@ public class Hero : MonoBehaviour
             // If the shield is going to be set to less than zero
             if (value < 0) {
                 Destroy(this.gameObject); // destroy hero
+                Main.HERO_DIED();
             }
         }
     }

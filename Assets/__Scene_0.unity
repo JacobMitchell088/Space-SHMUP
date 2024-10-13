@@ -623,6 +623,7 @@ MonoBehaviour:
   - {fileID: 8802187447963887403, guid: 7660c996b4d55db48878a7d55d40d8a1, type: 3}
   enemySpawnPerSecond: 0.5
   enemyInsetDefault: 1.5
+  gameRestartDelay: 2
 --- !u!114 &963194230
 MonoBehaviour:
   m_ObjectHideFlags: 0
